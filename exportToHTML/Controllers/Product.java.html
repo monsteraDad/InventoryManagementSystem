@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>Product.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #808080;}
+.s4 { color: #629755; font-weight: bold; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Product.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">Controllers</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">Controllers.Part</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.collections.FXCollections</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.collections.ObservableList</span><span class="s0">;</span>
+
+<span class="s2">/** This class contains the product constructor. */</span>
+<span class="s0">public class </span><span class="s1">Product {</span>
+
+    <span class="s0">private static </span><span class="s1">ObservableList&lt;Part&gt; associatedParts = FXCollections.observableArrayList()</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">productID</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String productName</span><span class="s0">;</span>
+    <span class="s0">private double </span><span class="s1">productPrice</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">productStock</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">productMax</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">productMin</span><span class="s0">;</span>
+
+    <span class="s3">//Product Constructor</span>
+    <span class="s0">public </span><span class="s1">Product(</span><span class="s0">int </span><span class="s1">productID</span><span class="s0">, </span><span class="s1">String productName</span><span class="s0">, double </span><span class="s1">productPrice</span><span class="s0">, int </span><span class="s1">productStock</span><span class="s0">, int </span><span class="s1">productMax</span><span class="s0">, int </span><span class="s1">productMin) {</span>
+        <span class="s0">this</span><span class="s1">.productID = productID</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.productName = productName</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.productPrice = productPrice</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.productStock = productStock</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.productMax = productMax</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.productMin = productMin</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@return </span><span class="s2">the product ID */</span>
+    <span class="s0">public int </span><span class="s1">getProductID() {</span>
+        <span class="s0">return </span><span class="s1">productID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@param </span><span class="s2">productID the product ID to set. */</span>
+    <span class="s0">public void </span><span class="s1">setProductID(</span><span class="s0">int </span><span class="s1">productID) {</span>
+        <span class="s0">this</span><span class="s1">.productID = productID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@return </span><span class="s2">the product name */</span>
+    <span class="s0">public </span><span class="s1">String getProductName() {</span>
+        <span class="s0">return </span><span class="s1">productName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@param </span><span class="s2">productName the product name to set. */</span>
+    <span class="s0">public void </span><span class="s1">setProductName(String productName) {</span>
+        <span class="s0">this</span><span class="s1">.productName = productName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@return </span><span class="s2">the product price */</span>
+    <span class="s0">public double </span><span class="s1">getProductPrice() {</span>
+        <span class="s0">return </span><span class="s1">productPrice</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@param </span><span class="s2">productPrice the product price to set. */</span>
+    <span class="s0">public void </span><span class="s1">setProductPrice(</span><span class="s0">double </span><span class="s1">productPrice) {</span>
+        <span class="s0">this</span><span class="s1">.productPrice = productPrice</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@return </span><span class="s2">the product inventory */</span>
+    <span class="s0">public int </span><span class="s1">getProductStock() {</span>
+        <span class="s0">return </span><span class="s1">productStock</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@param </span><span class="s2">productStock the product inventory to set. */</span>
+    <span class="s0">public void </span><span class="s1">setProductStock(</span><span class="s0">int </span><span class="s1">productStock) {</span>
+        <span class="s0">this</span><span class="s1">.productStock = productStock</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@return </span><span class="s2">the product max */</span>
+    <span class="s0">public int </span><span class="s1">getProductMax() {</span>
+        <span class="s0">return </span><span class="s1">productMax</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@param </span><span class="s2">productMax the product max to set. */</span>
+    <span class="s0">public void </span><span class="s1">setProductMax(</span><span class="s0">int </span><span class="s1">productMax) {</span>
+        <span class="s0">this</span><span class="s1">.productMax = productMax</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@return </span><span class="s2">the product min */</span>
+    <span class="s0">public int </span><span class="s1">getProductMin() {</span>
+        <span class="s0">return </span><span class="s1">productMin</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@param </span><span class="s2">productMin  the product min to set. */</span>
+    <span class="s0">public void </span><span class="s1">setProductMin(</span><span class="s0">int </span><span class="s1">productMin) {</span>
+        <span class="s0">this</span><span class="s1">.productMin = productMin</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@param </span><span class="s2">newPart the new part to add to associated parts. */</span>
+    <span class="s0">public void </span><span class="s1">addAssociatedPart(Part newPart) {</span>
+        <span class="s1">associatedParts.add(newPart)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@param </span><span class="s2">selectedAssociatedPart selected associated part to remove.</span>
+        <span class="s4">@return </span><span class="s2">true */</span>
+    <span class="s0">public static boolean </span><span class="s1">deleteAssociatedPart(Part selectedAssociatedPart){</span>
+        <span class="s0">if </span><span class="s1">(associatedParts.contains(selectedAssociatedPart)) {</span>
+            <span class="s1">associatedParts.remove(selectedAssociatedPart)</span><span class="s0">;</span>
+            <span class="s0">return true;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">return false;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s4">@return </span><span class="s2">the associated product parts */</span>
+    <span class="s0">public </span><span class="s1">ObservableList&lt;Part&gt; getAssociatedParts() {</span>
+        <span class="s0">return </span><span class="s1">associatedParts</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+
+</pre>
+</body>
+</html>

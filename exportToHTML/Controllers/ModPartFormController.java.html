@@ -1,0 +1,193 @@
+<html>
+<head>
+<title>ModPartFormController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #629755; font-weight: bold; font-style: italic;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ModPartFormController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">Controllers</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">javafx.event.ActionEvent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.fxml.FXML</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.fxml.FXMLLoader</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.fxml.Initializable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.Parent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.Scene</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.control.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.stage.Stage</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Optional</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ResourceBundle</span><span class="s0">;</span>
+
+<span class="s2">/** This class controls the modify part form. */</span>
+<span class="s0">public class </span><span class="s1">ModPartFormController </span><span class="s0">implements </span><span class="s1">Initializable {</span>
+
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">RadioButton ModInHouseRBtn</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">RadioButton ModOSPartRBtn</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">Label InOrOutModPart</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModPartIdTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModPartNameTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModPartInvTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModPartPriceTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModPartMaxTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModPartMachineIdTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModPartMinTxt</span><span class="s0">;</span>
+
+    <span class="s0">private int </span><span class="s1">partIndex</span><span class="s0">;</span>
+
+    <span class="s1">Stage stage</span><span class="s0">;</span>
+    <span class="s1">Parent scene</span><span class="s0">;</span>
+
+    <span class="s2">/** This method saves updated data to the parts observable list. Prompts user with error screens depending on error occurrence.</span>
+        <span class="s3">@param </span><span class="s2">event updates data entered into text fields.</span>
+        <span class="s3">@return </span><span class="s2">updated part to parts observable list.*/</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionSave(ActionEvent event) </span><span class="s0">throws </span><span class="s1">IOException {</span>
+            <span class="s0">try </span><span class="s1">{</span>
+                <span class="s0">int </span><span class="s1">id = Integer.parseInt(ModPartIdTxt.getText())</span><span class="s0">;</span>
+                <span class="s1">String name = ModPartNameTxt.getText()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">stock = Integer.parseInt(ModPartInvTxt.getText())</span><span class="s0">;</span>
+                <span class="s1">Double price = Double.parseDouble(ModPartPriceTxt.getText())</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">max = Integer.parseInt(ModPartMaxTxt.getText())</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">min = Integer.parseInt(ModPartMinTxt.getText())</span><span class="s0">;</span>
+                <span class="s0">if </span><span class="s1">(Integer.parseInt(ModPartMaxTxt.getText()) &lt; Integer.parseInt(ModPartMinTxt.getText())) {</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;Part Max Can Not Be Less Than Part Min.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(Integer.parseInt(ModPartMaxTxt.getText()) &lt; Integer.parseInt(ModPartInvTxt.getText())) {</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;Part Max Can Not Be Less Than Part INV&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(Integer.parseInt(ModPartMinTxt.getText()) &gt; Integer.parseInt(ModPartInvTxt.getText())) {</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;Part Min Can Not Be More Than Part INV&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(emptyTxt() == </span><span class="s0">false</span><span class="s1">) {</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;Please enter missing Information.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(ModInHouseRBtn.isSelected()) {</span>
+                    <span class="s0">int </span><span class="s1">machineID = Integer.parseInt(ModPartMachineIdTxt.getText())</span><span class="s0">;</span>
+                    <span class="s1">Part updatedPart = </span><span class="s0">new </span><span class="s1">InHouse(id</span><span class="s0">, </span><span class="s1">name</span><span class="s0">, </span><span class="s1">price</span><span class="s0">, </span><span class="s1">stock</span><span class="s0">, </span><span class="s1">min</span><span class="s0">, </span><span class="s1">max</span><span class="s0">, </span><span class="s1">machineID)</span><span class="s0">;</span>
+                    <span class="s1">Inventory.updatePart(</span><span class="s0">this</span><span class="s1">.partIndex</span><span class="s0">, </span><span class="s1">updatedPart)</span><span class="s0">;</span>
+                    <span class="s1">stage = (Stage) ((Button) event.getSource()).getScene().getWindow()</span><span class="s0">;</span>
+                    <span class="s1">scene = FXMLLoader.load(getClass().getResource(</span><span class="s4">&quot;/view/MainForm.fxml&quot;</span><span class="s1">))</span><span class="s0">;</span>
+                    <span class="s1">stage.setScene(</span><span class="s0">new </span><span class="s1">Scene(scene))</span><span class="s0">;</span>
+                    <span class="s1">stage.show()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">ModOSPartRBtn.selectedProperty().set(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">String companyName = ModPartMachineIdTxt.getText()</span><span class="s0">;</span>
+                    <span class="s1">Part updatedPart = </span><span class="s0">new </span><span class="s1">Outsourced(id</span><span class="s0">, </span><span class="s1">name</span><span class="s0">, </span><span class="s1">price</span><span class="s0">, </span><span class="s1">stock</span><span class="s0">, </span><span class="s1">min</span><span class="s0">, </span><span class="s1">max</span><span class="s0">, </span><span class="s1">companyName)</span><span class="s0">;</span>
+                    <span class="s1">Inventory.updatePart(</span><span class="s0">this</span><span class="s1">.partIndex</span><span class="s0">, </span><span class="s1">updatedPart)</span><span class="s0">;</span>
+                    <span class="s1">stage = (Stage) ((Button) event.getSource()).getScene().getWindow()</span><span class="s0">;</span>
+                    <span class="s1">scene = FXMLLoader.load(getClass().getResource(</span><span class="s4">&quot;/view/MainForm.fxml&quot;</span><span class="s1">))</span><span class="s0">;</span>
+                    <span class="s1">stage.setScene(</span><span class="s0">new </span><span class="s1">Scene(scene))</span><span class="s0">;</span>
+                    <span class="s1">stage.show()</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">} </span><span class="s0">catch </span><span class="s1">(NumberFormatException exception) {</span>
+                <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                <span class="s1">alert.setTitle(</span><span class="s4">&quot;Invalid Values&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">alert.setContentText(</span><span class="s4">&quot;Please Input Valid Values in each TextField.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+        <span class="s1">}</span>
+
+        <span class="s2">/** This Method checks if the text fields are empty.</span>
+         <span class="s3">@return </span><span class="s2">true if no text field empty. */</span>
+        <span class="s0">public boolean </span><span class="s1">emptyTxt() {</span>
+            <span class="s0">if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModPartNameTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModPartNameTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s0">return false;</span>
+            <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModPartInvTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModPartInvTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s0">return false;</span>
+            <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModPartPriceTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModPartPriceTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s0">return false;</span>
+            <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModPartMaxTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModPartMaxTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s0">return false;</span>
+            <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModPartMinTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModPartMinTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+                <span class="s0">return false;</span>
+            <span class="s1">}</span>
+            <span class="s0">return true;</span>
+        <span class="s1">}</span>
+
+    <span class="s2">/** This method allows user to cancel data entry on form and return to main form.</span>
+        <span class="s3">@param </span><span class="s2">event when cancel button is clicked prompt user with confirmation.</span>
+        <span class="s3">@return </span><span class="s2">to the Main form screen. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionToMAinForm(ActionEvent event) </span><span class="s0">throws </span><span class="s1">IOException {</span>
+        <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.CONFIRMATION)</span><span class="s0">;</span>
+        <span class="s1">alert.setTitle(</span><span class="s4">&quot;Return to Main Menu?&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">alert.setContentText(</span><span class="s4">&quot;Are you sure you wish to Cancel Data Update? All Updates Will be Lost&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">Optional&lt;ButtonType&gt; results = alert.showAndWait()</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(results.get() == ButtonType.OK) {</span>
+            <span class="s1">stage = (Stage) ((Button) event.getSource()).getScene().getWindow()</span><span class="s0">;</span>
+            <span class="s1">scene = FXMLLoader.load(getClass().getResource(</span><span class="s4">&quot;/view/MainForm.fxml&quot;</span><span class="s1">))</span><span class="s0">;</span>
+            <span class="s1">stage.setScene(</span><span class="s0">new </span><span class="s1">Scene(scene))</span><span class="s0">;</span>
+            <span class="s1">stage.show()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method Switches to InHouse Part. When the InHouse Radio button is selected print Machine ID to InOrOut Label.</span>
+     <span class="s3">@param </span><span class="s2">event InOrOutLabel being changed.</span>
+     <span class="s3">@return </span><span class="s2">InOrOut Label as Machine ID. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionToModInHousePart(ActionEvent event) {</span>
+        <span class="s1">InOrOutModPart.setText(</span><span class="s4">&quot;Machine ID&quot;</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s2">/** This method Switches to Outsource part.</span>
+        <span class="s3">@param </span><span class="s2">event InOrOutLabel being changed.</span>
+        <span class="s3">@return </span><span class="s2">InOROut label as Company Name. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionToModOSPart(ActionEvent event) {</span>
+        <span class="s1">InOrOutModPart.setText(</span><span class="s4">&quot;Company Name&quot;</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method sends InHouse parts data to the text fields.</span>
+        <span class="s3">@param </span><span class="s2">modifyPart send the data to be updated from the selected part in the main menu. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">public void </span><span class="s1">sendPart(Part modifyPart){</span>
+        <span class="s0">this</span><span class="s1">.partIndex = Inventory.getAllParts().indexOf(modifyPart)</span><span class="s0">;</span>
+        <span class="s1">ModPartIdTxt.setText(String.valueOf(modifyPart.getId()))</span><span class="s0">;</span>
+        <span class="s1">ModPartNameTxt.setText(modifyPart.getName())</span><span class="s0">;</span>
+        <span class="s1">ModPartInvTxt.setText(String.valueOf(modifyPart.getStock()))</span><span class="s0">;</span>
+        <span class="s1">ModPartPriceTxt.setText(String.valueOf(modifyPart.getPrice()))</span><span class="s0">;</span>
+        <span class="s1">ModPartMaxTxt.setText(String.valueOf(modifyPart.getMax()))</span><span class="s0">;</span>
+        <span class="s1">ModPartMinTxt.setText(String.valueOf(modifyPart.getMin()))</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(modifyPart </span><span class="s0">instanceof </span><span class="s1">InHouse){</span>
+            <span class="s1">ModInHouseRBtn.selectedProperty().set(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">ModPartMachineIdTxt.setText(Integer.toString(((InHouse) modifyPart).getMachineID()))</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">ModOSPartRBtn.selectedProperty().set(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">ModPartMachineIdTxt.setText(String.valueOf(((Outsourced) modifyPart).getCompanyName()))</span><span class="s0">;</span>
+            <span class="s1">InOrOutModPart.setText(</span><span class="s4">&quot;Company Name&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method will initialize the page with the data to be modified. */</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">initialize(URL url</span><span class="s0">, </span><span class="s1">ResourceBundle resourceBundle) {}}</span>
+</pre>
+</body>
+</html>

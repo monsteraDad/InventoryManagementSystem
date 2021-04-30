@@ -1,0 +1,135 @@
+<html>
+<head>
+<title>Part.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #629755; font-weight: bold; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Part.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">Controllers</span><span class="s0">;</span>
+
+<span class="s0">public abstract class </span><span class="s1">Part {</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Supplied class Part.java</span>
+     <span class="s2">*/</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">*</span>
+     <span class="s2">* </span><span class="s3">@author </span><span class="s2">Jared Breyer</span>
+     <span class="s2">*/</span>
+        <span class="s0">private int </span><span class="s1">id</span><span class="s0">;</span>
+        <span class="s0">private </span><span class="s1">String name</span><span class="s0">;</span>
+        <span class="s0">private double </span><span class="s1">price</span><span class="s0">;</span>
+        <span class="s0">private int </span><span class="s1">stock</span><span class="s0">;</span>
+        <span class="s0">private int </span><span class="s1">min</span><span class="s0">;</span>
+        <span class="s0">private int </span><span class="s1">max</span><span class="s0">;</span>
+
+        <span class="s0">public </span><span class="s1">Part(</span><span class="s0">int </span><span class="s1">id</span><span class="s0">, </span><span class="s1">String name</span><span class="s0">, double </span><span class="s1">price</span><span class="s0">, int </span><span class="s1">stock</span><span class="s0">, int </span><span class="s1">min</span><span class="s0">, int </span><span class="s1">max) {</span>
+            <span class="s0">this</span><span class="s1">.id = id</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.name = name</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.price = price</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.stock = stock</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.min = min</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.max = max</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@return </span><span class="s2">the id</span>
+         <span class="s2">*/</span>
+        <span class="s0">public int </span><span class="s1">getId() {</span>
+            <span class="s0">return </span><span class="s1">id</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@param </span><span class="s2">id the id to set</span>
+         <span class="s2">*/</span>
+        <span class="s0">public void </span><span class="s1">setId(</span><span class="s0">int </span><span class="s1">id) {</span>
+            <span class="s0">this</span><span class="s1">.id = id</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@return </span><span class="s2">the name</span>
+         <span class="s2">*/</span>
+        <span class="s0">public </span><span class="s1">String getName() {</span>
+            <span class="s0">return </span><span class="s1">name</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@param </span><span class="s2">name the name to set</span>
+         <span class="s2">*/</span>
+        <span class="s0">public void </span><span class="s1">setName(String name) {</span>
+            <span class="s0">this</span><span class="s1">.name = name</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@return </span><span class="s2">the price</span>
+         <span class="s2">*/</span>
+        <span class="s0">public double </span><span class="s1">getPrice() {</span>
+            <span class="s0">return </span><span class="s1">price</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@param </span><span class="s2">price the price to set</span>
+         <span class="s2">*/</span>
+        <span class="s0">public void </span><span class="s1">setPrice(</span><span class="s0">double </span><span class="s1">price) {</span>
+            <span class="s0">this</span><span class="s1">.price = price</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@return </span><span class="s2">the stock</span>
+         <span class="s2">*/</span>
+        <span class="s0">public int </span><span class="s1">getStock() {</span>
+            <span class="s0">return </span><span class="s1">stock</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@param </span><span class="s2">stock the stock to set</span>
+         <span class="s2">*/</span>
+        <span class="s0">public void </span><span class="s1">setStock(</span><span class="s0">int </span><span class="s1">stock) {</span>
+            <span class="s0">this</span><span class="s1">.stock = stock</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@return </span><span class="s2">the min</span>
+         <span class="s2">*/</span>
+        <span class="s0">public int </span><span class="s1">getMin() {</span>
+            <span class="s0">return </span><span class="s1">min</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@param </span><span class="s2">min the min to set</span>
+         <span class="s2">*/</span>
+        <span class="s0">public void </span><span class="s1">setMin(</span><span class="s0">int </span><span class="s1">min) {</span>
+            <span class="s0">this</span><span class="s1">.min = min</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@return </span><span class="s2">the max</span>
+         <span class="s2">*/</span>
+        <span class="s0">public int </span><span class="s1">getMax() {</span>
+            <span class="s0">return </span><span class="s1">max</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s2">/**</span>
+         <span class="s2">* </span><span class="s3">@param </span><span class="s2">max the max to set</span>
+         <span class="s2">*/</span>
+        <span class="s0">public void </span><span class="s1">setMax(</span><span class="s0">int </span><span class="s1">max) {</span>
+            <span class="s0">this</span><span class="s1">.max = max</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+<span class="s1">}</span>
+
+
+</pre>
+</body>
+</html>

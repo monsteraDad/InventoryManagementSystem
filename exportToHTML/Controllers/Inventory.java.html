@@ -1,0 +1,166 @@
+<html>
+<head>
+<title>Inventory.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+.s5 { color: #629755; font-weight: bold; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Inventory.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">Controllers</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">javafx.collections.FXCollections</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.collections.ObservableList</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+
+<span class="s2">/** This Class contains the Observable List Arrays for Parts and products. */</span>
+<span class="s0">public class </span><span class="s1">Inventory {</span>
+
+<span class="s3">//create observable lists for parts and products</span>
+    <span class="s0">private static </span><span class="s1">ObservableList&lt;Part&gt; allParts = FXCollections.observableArrayList()</span><span class="s0">;</span>
+    <span class="s0">private static </span><span class="s1">ObservableList&lt;Product&gt; allProducts = FXCollections.observableArrayList()</span><span class="s0">;</span>
+    <span class="s0">private static int </span><span class="s1">partIDCount = </span><span class="s4">0</span><span class="s0">;</span>
+    <span class="s0">private static int </span><span class="s1">ProductIDCount = </span><span class="s4">0</span><span class="s0">;</span>
+
+    <span class="s2">/** </span><span class="s5">@param </span><span class="s2">newPart newPart to add to allParts observable array.*/</span>
+    <span class="s0">public static void </span><span class="s1">addPart(Part newPart){</span>
+        <span class="s1">allParts.add(newPart)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s2">/** </span><span class="s5">@param </span><span class="s2">newProduct  newProduct to add to the allProducts observable array. */</span>
+    <span class="s0">public static void </span><span class="s1">addProduct(Product newProduct){</span>
+        <span class="s1">allProducts.add(newProduct)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method looks up a part by its part ID.</span>
+        <span class="s5">@param </span><span class="s2">partID PartID to match.</span>
+        <span class="s5">@return </span><span class="s2">part */</span>
+    <span class="s0">public static </span><span class="s1">Part lookupPartID(Integer partID){</span>
+        <span class="s0">for </span><span class="s1">(Part part : allParts) {</span>
+            <span class="s0">if </span><span class="s1">(part.getId() == partID) {</span>
+                <span class="s0">return </span><span class="s1">part</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return null;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This Method looks up a part by its partial or whole name.</span>
+        <span class="s5">@param </span><span class="s2">partName part name to match.</span>
+        <span class="s5">@return </span><span class="s2">found part names */</span>
+    <span class="s0">public static </span><span class="s1">Object lookupPartName(String partName){</span>
+        <span class="s1">ArrayList&lt;Part&gt; foundPartNames = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s4">0</span><span class="s0">; </span><span class="s1">i&lt;allParts.size()</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s0">if </span><span class="s1">(allParts.get(i).getName().contains(partName)){</span>
+                <span class="s1">foundPartNames.add(allParts.get(i))</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">foundPartNames</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method looks up a product by its part ID.</span>
+     <span class="s5">@param </span><span class="s2">productID ProductID to  match.</span>
+     <span class="s5">@return </span><span class="s2">product */</span>
+    <span class="s0">public static </span><span class="s1">Product lookupProductID(Integer productID){</span>
+       <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s4">0</span><span class="s0">; </span><span class="s1">i&lt;allProducts.size()</span><span class="s0">; </span><span class="s1">i++) {</span>
+           <span class="s0">if </span><span class="s1">(allProducts.get(i).getProductID() == productID) {</span>
+               <span class="s0">return </span><span class="s1">allProducts.get(i)</span><span class="s0">;</span>
+           <span class="s1">}</span>
+       <span class="s1">}</span>
+       <span class="s0">return null;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method looks up a product by its partial or whole name.</span>
+        <span class="s5">@param </span><span class="s2">productName to match.</span>
+        <span class="s5">@return </span><span class="s2">found product names. */</span>
+   <span class="s3">//look up product from product name</span>
+    <span class="s0">public static </span><span class="s1">Object lookupProductName(String productName) {</span>
+        <span class="s1">ArrayList&lt;Product&gt; foundProductNames = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s0">; </span><span class="s1">i &lt; allProducts.size()</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s0">if </span><span class="s1">(allProducts.get(i).getProductName().contains(productName)) {</span>
+                <span class="s1">foundProductNames.add(allProducts.get(i))</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">return </span><span class="s1">foundProductNames</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s5">@param </span><span class="s2">selectedProduct  the product ot update.</span>
+        <span class="s5">@param </span><span class="s2">index  the placement of the product in the allProduct array.*/</span>
+     <span class="s0">public static void </span><span class="s1">updateProduct(</span><span class="s0">int </span><span class="s1">index</span><span class="s0">, </span><span class="s1">Product selectedProduct){</span>
+        <span class="s1">allProducts.set(index</span><span class="s0">, </span><span class="s1">selectedProduct)</span><span class="s0">;</span>
+     <span class="s1">}</span>
+
+     <span class="s2">/** </span><span class="s5">@param </span><span class="s2">selectedPart the part to update.</span>
+        <span class="s5">@param </span><span class="s2">index the placement of the part in the allParts array. */</span>
+     <span class="s0">public static void </span><span class="s1">updatePart(</span><span class="s0">int </span><span class="s1">index</span><span class="s0">, </span><span class="s1">Part selectedPart){</span>
+        <span class="s1">allParts.set(index</span><span class="s0">, </span><span class="s1">selectedPart)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s5">@param </span><span class="s2">selectedPart the part to delete.</span>
+        <span class="s5">@return </span><span class="s2">true */</span>
+    <span class="s0">public static boolean </span><span class="s1">deletePart(Part selectedPart){</span>
+       <span class="s0">if</span><span class="s1">(allParts.contains(selectedPart)) {</span>
+           <span class="s1">allParts.remove(selectedPart)</span><span class="s0">;</span>
+           <span class="s0">return true;</span>
+       <span class="s1">}</span><span class="s0">else </span><span class="s1">{</span>
+           <span class="s0">return false;</span>
+       <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s5">@param </span><span class="s2">selectedProduct  the product to delete.</span>
+        <span class="s5">@return  </span><span class="s2">true */</span>
+    <span class="s0">public static boolean </span><span class="s1">deletedProduct(Product selectedProduct){</span>
+        <span class="s0">if</span><span class="s1">(allProducts.contains(selectedProduct)) {</span>
+            <span class="s1">allProducts.remove(selectedProduct)</span><span class="s0">;</span>
+            <span class="s0">return true;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">return false;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s5">@return </span><span class="s2">all the parts. */</span>
+    <span class="s0">public static </span><span class="s1">ObservableList&lt;Part&gt; getAllParts() {</span>
+        <span class="s0">return </span><span class="s1">allParts</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s5">@return </span><span class="s2">all the products. */</span>
+    <span class="s0">public static </span><span class="s1">ObservableList&lt;Product&gt; getAllProducts() {</span>
+        <span class="s0">return </span><span class="s1">allProducts</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s5">@return </span><span class="s2">part ID count plus one.  */</span>
+    <span class="s0">public static int </span><span class="s1">getPartIDCount() {</span>
+        <span class="s0">return </span><span class="s1">partIDCount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s2">/** </span><span class="s5">@return  </span><span class="s2">the Part ID count as one. */</span>
+    <span class="s0">public static int </span><span class="s1">setPartIDCount() {</span>
+       <span class="s0">return </span><span class="s1">partIDCount ++</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** </span><span class="s5">@return </span><span class="s2">the product id count plus one. */</span>
+    <span class="s0">public static int </span><span class="s1">getProductIDCount() {</span>
+        <span class="s0">return </span><span class="s1">ProductIDCount</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** this method sets Product count as one.  */</span>
+    <span class="s0">public static void </span><span class="s1">setProductIDCount() {</span>
+        <span class="s1">ProductIDCount ++</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">}</span>
+
+
+
+
+</pre>
+</body>
+</html>

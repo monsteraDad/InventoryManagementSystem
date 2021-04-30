@@ -1,0 +1,170 @@
+<html>
+<head>
+<title>AddPartFormController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #629755; font-weight: bold; font-style: italic;}
+.s4 { color: #808080;}
+.s5 { color: #6a8759;}
+.s6 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AddPartFormController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">Controllers</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">javafx.fxml.FXMLLoader</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.Scene</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.event.ActionEvent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.fxml.FXML</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.fxml.Initializable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.Parent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.control.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.stage.Stage</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Optional</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ResourceBundle</span><span class="s0">;</span>
+
+<span class="s2">/** This class controls the add part form. */</span>
+<span class="s0">public class </span><span class="s1">AddPartFormController </span><span class="s0">implements </span><span class="s1">Initializable {</span>
+
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">RadioButton InHouseRBtn</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">Label InOrOut</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField AddPartIdTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField AddNameTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField AddPartInvTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField AddPartCostTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField AddPartMaxTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField AddPartMinTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField InOrOutTxt</span><span class="s0">;</span>
+
+    <span class="s1">Stage stage</span><span class="s0">;</span>
+    <span class="s1">Parent scene</span><span class="s0">;</span>
+
+    <span class="s2">/** This method saves data to the Part array.</span>
+        <span class="s3">@param </span><span class="s2">event Saves data entered while exception handling.</span>
+        <span class="s3">@return </span><span class="s2">store Part in the part observable list to be called in the Main for.</span>
+      <span class="s2">*/</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionSaveBtn(ActionEvent event) </span><span class="s0">throws </span><span class="s1">IOException {</span>
+        <span class="s4">//RETRIEVE THE VALUES FROM THE TEXT FIELDS SEND TO PART TABLE VIEW ON MAIN FORM</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">Inventory.setPartIDCount()</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">id = Inventory.getPartIDCount()</span><span class="s0">;</span>
+            <span class="s1">String name = AddNameTxt.getText()</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">stock = Integer.parseInt(AddPartInvTxt.getText())</span><span class="s0">;</span>
+            <span class="s1">Double price = Double.parseDouble(AddPartCostTxt.getText())</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">max = Integer.parseInt(AddPartMaxTxt.getText())</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">min = Integer.parseInt(AddPartMinTxt.getText())</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(Integer.parseInt(AddPartMaxTxt.getText()) &lt; Integer.parseInt(AddPartMinTxt.getText())) {</span>
+                <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                <span class="s1">alert.setContentText(</span><span class="s5">&quot;Part Max Can not be Less Than Part Min.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(Integer.parseInt(AddPartMaxTxt.getText()) &lt; Integer.parseInt(AddPartInvTxt.getText())) {</span>
+                <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                <span class="s1">alert.setContentText(</span><span class="s5">&quot;Part Max Can Not Be Less Than Part INV&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(Integer.parseInt(AddPartMinTxt.getText()) &gt; Integer.parseInt(AddPartInvTxt.getText())) {</span>
+                <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                <span class="s1">alert.setContentText(</span><span class="s5">&quot;Part Min Can Not Be Greater Than Part INV&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(emptyTxt() == </span><span class="s0">false</span><span class="s1">) {</span>
+                <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                <span class="s1">alert.setContentText(</span><span class="s5">&quot;Please enter missing Information.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else if </span><span class="s1">(InHouseRBtn.isSelected()) {</span>
+                <span class="s0">int </span><span class="s1">machineID = Integer.parseInt(InOrOutTxt.getText())</span><span class="s0">;</span>
+                <span class="s1">Inventory.addPart(</span><span class="s0">new </span><span class="s1">InHouse(id</span><span class="s0">, </span><span class="s1">name</span><span class="s0">, </span><span class="s1">price</span><span class="s0">, </span><span class="s1">stock</span><span class="s0">, </span><span class="s1">min</span><span class="s0">, </span><span class="s1">max</span><span class="s0">, </span><span class="s1">machineID))</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">String companyName = InOrOutTxt.getText()</span><span class="s0">;</span>
+                <span class="s1">Inventory.addPart(</span><span class="s0">new </span><span class="s1">Outsourced(id</span><span class="s0">, </span><span class="s1">name</span><span class="s0">, </span><span class="s1">price</span><span class="s0">, </span><span class="s1">stock</span><span class="s0">, </span><span class="s1">min</span><span class="s0">, </span><span class="s1">max</span><span class="s0">, </span><span class="s1">companyName))</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">stage = (Stage) ((Button) event.getSource()).getScene().getWindow()</span><span class="s0">;</span>
+            <span class="s1">scene = FXMLLoader.load(getClass().getResource(</span><span class="s5">&quot;/view/MainForm.fxml&quot;</span><span class="s1">))</span><span class="s0">;</span>
+            <span class="s1">stage.setScene(</span><span class="s0">new </span><span class="s1">Scene(scene))</span><span class="s0">;</span>
+            <span class="s1">stage.show()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(NumberFormatException ex) {</span>
+            <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+            <span class="s1">alert.setContentText(</span><span class="s5">&quot;Please Enter Valid Data Types.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s1">}</span>
+
+
+    <span class="s2">/** This Method Checks each text field for empty fields or null values.</span>
+      <span class="s3">@return </span><span class="s2">true if text fields are not empty.  */</span>
+    <span class="s0">public </span><span class="s1">Boolean emptyTxt() {</span>
+        <span class="s0">if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.AddNameTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.AddNameTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">return false;</span>
+        <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.AddPartInvTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.AddPartInvTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">return false;</span>
+        <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.AddPartCostTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.AddPartCostTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">return false;</span>
+        <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.AddPartMaxTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.AddPartMaxTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">return false;</span>
+        <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.AddPartMinTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.AddPartMinTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">return false;</span>
+        <span class="s1">}</span>
+        <span class="s0">return true;</span>
+    <span class="s1">}</span>
+    <span class="s2">/** This Method Switches to Outsource Part. When the Outsourced Radio button is selected print Company name to InOrOut Label.</span>
+     <span class="s2">* </span><span class="s3">@param </span><span class="s2">event InOrOut label being changed</span>
+     <span class="s2">* </span><span class="s3">@return </span><span class="s2">InOrOut Label as Company Name. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">onActionOutsourced(ActionEvent event) {</span>
+        <span class="s1">InOrOut.setText(</span><span class="s5">&quot;Company Name&quot;</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s2">/** This method Switches to InHouse Part. When the InHouse Radio button is selected print Machine ID to InOrOut Label.</span>
+        <span class="s3">@param </span><span class="s2">event InOrOutLabel being changed.</span>
+        <span class="s3">@return </span><span class="s2">InOrOut Label as Machine ID. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">onActionInHouse(ActionEvent event) </span><span class="s0">throws </span><span class="s1">IOException{</span>
+        <span class="s1">InOrOut.setText(</span><span class="s5">&quot;Machine ID&quot;</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** this method allows to cancel adding a part. When the cancel button is clicked the user will be promped with a confirmatoin page.</span>
+        <span class="s2">If user clicks OK, Take user to Main Form.</span>
+        <span class="s3">@param </span><span class="s2">event To the Main Form.</span>
+        <span class="s3">@return </span><span class="s2">To Main Form*/</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionToMainForm(ActionEvent event) </span><span class="s0">throws </span><span class="s1">IOException {</span>
+        <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.CONFIRMATION)</span><span class="s0">;</span>
+        <span class="s1">alert.setTitle(</span><span class="s5">&quot;Please Confirm!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">alert.setContentText(</span><span class="s5">&quot;Are You Sure You Wish to Cancel. All Data Entered Will Be Lost.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">Optional&lt;ButtonType&gt; results = alert.showAndWait()</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(results.get() == ButtonType.OK) {</span>
+            <span class="s1">stage = (Stage) ((Button) event.getSource()).getScene().getWindow()</span><span class="s0">;</span>
+            <span class="s1">scene = FXMLLoader.load(getClass().getResource(</span><span class="s5">&quot;/view/MainForm.fxml&quot;</span><span class="s1">))</span><span class="s0">;</span>
+            <span class="s1">stage.setScene(</span><span class="s0">new </span><span class="s1">Scene(scene))</span><span class="s0">;</span>
+            <span class="s1">stage.show()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method initializes the Part ID. */</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">initialize(URL url</span><span class="s0">, </span><span class="s1">ResourceBundle resourceBundle) {</span>
+        <span class="s1">AddPartIdTxt.setText(String.valueOf(Inventory.getPartIDCount()+</span><span class="s6">1</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">AddPartIdTxt.setEditable(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

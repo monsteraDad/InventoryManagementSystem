@@ -1,0 +1,285 @@
+<html>
+<head>
+<title>ModProdFormController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #629755; font-weight: bold; font-style: italic;}
+.s4 { color: #6a8759;}
+.s5 { color: #6897bb;}
+.s6 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ModProdFormController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">Controllers</span><span class="s0">;</span>
+
+
+<span class="s0">import </span><span class="s1">javafx.collections.FXCollections</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.collections.ObservableList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.event.ActionEvent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.fxml.FXML</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.fxml.FXMLLoader</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.fxml.Initializable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.Parent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.Scene</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.control.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.scene.control.cell.PropertyValueFactory</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javafx.stage.Stage</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.net.URL</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Optional</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ResourceBundle</span><span class="s0">;</span>
+
+<span class="s2">/** This Class controls the modify product form. */</span>
+<span class="s0">public class </span><span class="s1">ModProdFormController </span><span class="s0">implements </span><span class="s1">Initializable {</span>
+
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModProdNameTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModProdInvTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModProdPriceTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModProdMaxTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModProdMinTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField ModProdIdTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TextField PartTableQuery</span><span class="s0">;</span>
+
+    <span class="s2">/** This method tells the controller where to get the data for the part table view.*/</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableView&lt;Part&gt; PartTableView</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableColumn&lt;Part </span><span class="s0">, </span><span class="s1">Integer&gt; PartIdCol</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableColumn&lt;Part</span><span class="s0">, </span><span class="s1">String&gt; PartNameCol</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableColumn&lt;Part</span><span class="s0">, </span><span class="s1">Integer&gt; PartInventoryLevelCol</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableColumn&lt;Part</span><span class="s0">, </span><span class="s1">Double&gt; PartPriceCol</span><span class="s0">;</span>
+    <span class="s2">/** This method allows for the controller to know where to find the data for the product part table view. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableView&lt;Part&gt; ProductPartTableView</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableColumn&lt;Product</span><span class="s0">, </span><span class="s1">Integer&gt; ProdPartIDCol</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableColumn&lt;Product</span><span class="s0">, </span><span class="s1">String&gt; ProdPartNameCol</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableColumn&lt;Product</span><span class="s0">, </span><span class="s1">Integer&gt; ProdPartInventoryLevelTxt</span><span class="s0">;</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">private </span><span class="s1">TableColumn&lt;Product</span><span class="s0">, </span><span class="s1">Double&gt; ProdPartPriceCol</span><span class="s0">;</span>
+
+    <span class="s0">private </span><span class="s1">ObservableList&lt;Part&gt; newAssociatedParts = FXCollections.observableArrayList()</span><span class="s0">;</span>
+
+    <span class="s0">private int </span><span class="s1">productIndex</span><span class="s0">;</span>
+    <span class="s1">Stage stage</span><span class="s0">;</span>
+    <span class="s1">Parent scene</span><span class="s0">;</span>
+
+    <span class="s2">/** This method saves part data to associated part table view.</span>
+        <span class="s3">@param </span><span class="s2">event  Add button clicked.</span>
+        <span class="s3">@return </span><span class="s2">add selected part to the associated parts table. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionAddPart(ActionEvent event) {</span>
+        <span class="s1">Part selectedPart = PartTableView.getSelectionModel().getSelectedItem()</span><span class="s0">;</span>
+        <span class="s1">newAssociatedParts.add(selectedPart)</span><span class="s0">;</span>
+        <span class="s1">ProductPartTableView.setItems(newAssociatedParts)</span><span class="s0">;</span>
+        <span class="s1">ProdPartIDCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;id&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">ProdPartNameCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;name&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">ProdPartInventoryLevelTxt.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;stock&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">ProdPartPriceCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;price&quot;</span><span class="s1">))</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method allows for the deletion of parts from the associated parts table view.</span>
+        <span class="s3">@param </span><span class="s2">event remove associated part button clicked.</span>
+        <span class="s3">@return </span><span class="s2">Prompt user with confirmation, if OK clicked, delete selected item.</span>
+        <span class="s3">@retrun </span><span class="s2">If user did not select item prompt user with */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionDeleteProdPart(ActionEvent event) {</span>
+        <span class="s1">Part selectedAssociatedPart = ProductPartTableView.getSelectionModel().getSelectedItem()</span><span class="s0">;</span>
+        <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.CONFIRMATION)</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(selectedAssociatedPart != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">alert.setHeaderText(</span><span class="s4">&quot;Would You Like to Delete Selected Product Part.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">alert.setContentText(</span><span class="s4">&quot;Select 'OK' to Proceed with Deletion.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">Optional&lt;ButtonType&gt; result = alert.showAndWait()</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(result.get() == ButtonType.OK) {</span>
+                <span class="s1">Product.deleteAssociatedPart(selectedAssociatedPart)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">alert.setTitle(</span><span class="s4">&quot;No Product Part Selection Made.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">alert.setHeaderText(</span><span class="s4">&quot;Please Make a Selection for Deletion.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">alert.show()</span><span class="s0">;</span>
+
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This allows the user to save the changes they made and exit to the main form.</span>
+        <span class="s3">@param </span><span class="s2">event save button clicked.</span>
+        <span class="s3">@return </span><span class="s2">updated product to the product observable list and display main form.</span>
+        <span class="s2">prompt user with error window if any data entry errors occur. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionSave(ActionEvent event) </span><span class="s0">throws </span><span class="s1">IOException {</span>
+            <span class="s0">try </span><span class="s1">{</span>
+                <span class="s0">int </span><span class="s1">productID = Integer.parseInt(ModProdIdTxt.getText())</span><span class="s0">;</span>
+                <span class="s1">String productName = ModProdNameTxt.getText()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">productStock = Integer.parseInt(ModProdInvTxt.getText())</span><span class="s0">;</span>
+                <span class="s0">double </span><span class="s1">productPrice = Double.parseDouble(ModProdPriceTxt.getText())</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">productMax = Integer.parseInt(ModProdMaxTxt.getText())</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">productMin = Integer.parseInt(ModProdMinTxt.getText())</span><span class="s0">;</span>
+                <span class="s0">if </span><span class="s1">(Integer.parseInt(ModProdMaxTxt.getText()) &lt; Integer.parseInt(ModProdMinTxt.getText())) {</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;Product Max Can Not Be Less Than Product Min.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(Integer.parseInt(ModProdMaxTxt.getText()) &lt; Integer.parseInt(ModProdInvTxt.getText())) {</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;Product Max Can Not be Less Than Product INV.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(Integer.parseInt(ModProdInvTxt.getText()) &lt; Integer.parseInt(ModProdMinTxt.getText())) {</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;Product INV Can Not Be Less Than Product Min.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else if </span><span class="s1">(emptyTxt() == </span><span class="s0">false</span><span class="s1">) {</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;Please Enter Missing Information.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+                <span class="s1">}</span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">Product updatedProduct = </span><span class="s0">new </span><span class="s1">Product(productID</span><span class="s0">, </span><span class="s1">productName</span><span class="s0">, </span><span class="s1">productStock</span><span class="s0">, </span><span class="s1">(</span><span class="s0">int</span><span class="s1">) productPrice</span><span class="s0">, </span><span class="s1">productMax</span><span class="s0">, </span><span class="s1">productMin)</span><span class="s0">;</span>
+                    <span class="s0">for </span><span class="s1">(Part associatedPart : newAssociatedParts) {</span>
+                        <span class="s1">updatedProduct.addAssociatedPart(associatedPart)</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+                    <span class="s1">Inventory.updateProduct(</span><span class="s0">this</span><span class="s1">.productIndex</span><span class="s0">, </span><span class="s1">updatedProduct)</span><span class="s0">;</span>
+                    <span class="s1">stage = (Stage) ((Button) event.getSource()).getScene().getWindow()</span><span class="s0">;</span>
+                    <span class="s1">scene = FXMLLoader.load(getClass().getResource(</span><span class="s4">&quot;/view/MainForm.fxml&quot;</span><span class="s1">))</span><span class="s0">;</span>
+                    <span class="s1">stage.setScene(</span><span class="s0">new </span><span class="s1">Scene(scene))</span><span class="s0">;</span>
+                    <span class="s1">stage.show()</span><span class="s0">;</span>
+                <span class="s1">}</span>
+
+            <span class="s1">} </span><span class="s0">catch </span><span class="s1">(NumberFormatException exception) {</span>
+                <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                <span class="s1">alert.setTitle(</span><span class="s4">&quot;Invalid Values&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">alert.setContentText(</span><span class="s4">&quot;Please Input Valid Values in each TextField.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+
+<span class="s2">/** This method checks if text fields are empty.</span>
+    <span class="s3">@return </span><span class="s2">true if no text field empty. */</span>
+<span class="s0">public boolean </span><span class="s1">emptyTxt() {</span>
+    <span class="s0">if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModProdNameTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModProdNameTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+        <span class="s0">return false;</span>
+    <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModProdInvTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModProdInvTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+        <span class="s0">return false;</span>
+    <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModProdPriceTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModProdPriceTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+        <span class="s0">return false;</span>
+    <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModProdMaxTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModProdMaxTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+        <span class="s0">return false;</span>
+    <span class="s1">} </span><span class="s0">else if</span><span class="s1">(</span><span class="s0">this</span><span class="s1">.ModProdMaxTxt.getText().isEmpty() || </span><span class="s0">this</span><span class="s1">.ModProdMaxTxt.getText() == </span><span class="s0">null</span><span class="s1">) {</span>
+        <span class="s0">return false;</span>
+    <span class="s1">}</span>
+    <span class="s0">return true;</span>
+<span class="s1">}</span>
+    <span class="s2">/** This method allows the user to search part table view.</span>
+        <span class="s3">@param </span><span class="s2">event when user hits enter with text in the field.</span>
+        <span class="s3">@return </span><span class="s2">part from the search of the part table view by part ID or part Name.*/</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionSearchPartTable(ActionEvent event) {</span>
+        <span class="s1">String searchedPart = PartTableQuery.getText()</span><span class="s0">;</span>
+        <span class="s1">ObservableList&lt;Part&gt; partMatches = FXCollections.observableArrayList()</span><span class="s0">;</span>
+        <span class="s1">String[] searchCharacters = searchedPart.split(</span><span class="s4">&quot; &quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s5">0</span><span class="s0">; </span><span class="s1">i &lt; searchCharacters.length</span><span class="s0">; </span><span class="s1">i++) {</span>
+                <span class="s1">String parsedCharacters = searchCharacters[i]</span><span class="s0">;</span>
+                <span class="s1">ArrayList&lt;Part&gt; foundProdArray = (ArrayList&lt;Part&gt;) Inventory.lookupPartName(parsedCharacters)</span><span class="s0">;</span>
+                <span class="s0">for </span><span class="s1">(Part matchPart : foundProdArray) {</span>
+                    <span class="s1">partMatches.add(matchPart)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+            <span class="s1">PartTableView.setItems(partMatches)</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(partMatches.size() == </span><span class="s5">0</span><span class="s1">) {</span>
+                <span class="s1">Part PartSearchID = Inventory.lookupPartID(Integer.parseInt(searchedPart))</span><span class="s0">;</span>
+                <span class="s0">if </span><span class="s1">(PartSearchID != </span><span class="s0">null</span><span class="s1">) {</span>
+                    <span class="s1">partMatches.add(PartSearchID)</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+                    <span class="s1">alert.setContentText(</span><span class="s4">&quot;No Match Found. Please Check Data Entered and Try Again. &quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+                <span class="s1">}</span>
+                <span class="s1">PartTableView.setItems(partMatches)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(NumberFormatException formatException) {</span>
+            <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.ERROR)</span><span class="s0">;</span>
+            <span class="s1">alert.setContentText(</span><span class="s4">&quot;No Match Found. Please Check Data Entered and Try Again. &quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">alert.showAndWait()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method allows the user to cancel data entry.</span>
+        <span class="s3">@param </span><span class="s2">event cancel button clicked.</span>
+        <span class="s3">@return </span><span class="s2">confirmation prompt, if OK clicked, delete selected part. */</span>
+    <span class="s1">@FXML</span>
+    <span class="s0">void </span><span class="s1">OnActionToMainForm(ActionEvent event) </span><span class="s0">throws </span><span class="s1">IOException {</span>
+        <span class="s6">//promp user with warning</span>
+        <span class="s6">//exit to main page</span>
+        <span class="s1">Alert alert = </span><span class="s0">new </span><span class="s1">Alert(Alert.AlertType.CONFIRMATION)</span><span class="s0">;</span>
+        <span class="s1">alert.setTitle(</span><span class="s4">&quot;Please Confirm!&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">alert.setContentText(</span><span class="s4">&quot;Are You Sure You Wish to Cancel. All Data Entered Will Be Lost.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">Optional&lt;ButtonType&gt; results = alert.showAndWait()</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(results.get() == ButtonType.OK) {</span>
+            <span class="s1">stage = (Stage) ((Button) event.getSource()).getScene().getWindow()</span><span class="s0">;</span>
+            <span class="s1">scene = FXMLLoader.load(getClass().getResource(</span><span class="s4">&quot;/view/MainForm.fxml&quot;</span><span class="s1">))</span><span class="s0">;</span>
+            <span class="s1">stage.setScene(</span><span class="s0">new </span><span class="s1">Scene(scene))</span><span class="s0">;</span>
+            <span class="s1">stage.show()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method is for sending products data from the main form products table view.</span>
+        <span class="s3">@param </span><span class="s2">modProd used to get the product to be modified. */</span>
+    <span class="s0">public void </span><span class="s1">sendProduct(Product modProd){</span>
+        <span class="s0">this</span><span class="s1">.productIndex = Inventory.getAllProducts().indexOf(modProd)</span><span class="s0">;</span>
+        <span class="s1">ModProdIdTxt.setText(String.valueOf(modProd.getProductID()))</span><span class="s0">;</span>
+        <span class="s1">ModProdNameTxt.setText(modProd.getProductName())</span><span class="s0">;</span>
+        <span class="s1">ModProdInvTxt.setText(String.valueOf(modProd.getProductStock()))</span><span class="s0">;</span>
+        <span class="s1">ModProdPriceTxt.setText(String.valueOf(modProd.getProductPrice()))</span><span class="s0">;</span>
+        <span class="s1">ModProdMaxTxt.setText(String.valueOf(modProd.getProductMax()))</span><span class="s0">;</span>
+        <span class="s1">ModProdMinTxt.setText(String.valueOf(modProd.getProductMin()))</span><span class="s0">;</span>
+        <span class="s2">/** I had a logical error of leaving the code bellow in the initialize method of this controller.</span>
+            <span class="s2">However this piece of code needs to be sent to from the MainFormController to be loaded into the appropriate</span>
+            <span class="s2">associated part table view in the Modify Parts screen. To fix this issue, I simply moved it here, and the error was resolved. */</span>
+        <span class="s1">ProductPartTableView.setItems(modProd.getAssociatedParts())</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s2">/** This method initializes the screen with the data that was selected from the Products table view in main form.</span>
+        <span class="s3">@param </span><span class="s2">resourceBundle resources to load data into Part Tableview and Product text fields. */</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">initialize(URL url</span><span class="s0">, </span><span class="s1">ResourceBundle resourceBundle) {</span>
+        <span class="s6">//initialize the all parts table view.</span>
+        <span class="s1">PartTableView.setItems(Inventory.getAllParts())</span><span class="s0">;</span>
+        <span class="s1">PartIdCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;id&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">PartNameCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;name&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">PartInventoryLevelCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;stock&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">PartPriceCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;price&quot;</span><span class="s1">))</span><span class="s0">;</span>
+
+
+        <span class="s1">ProdPartIDCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;id&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">ProdPartNameCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;name&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">ProdPartInventoryLevelTxt.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;stock&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">ProdPartPriceCol.setCellValueFactory(</span><span class="s0">new </span><span class="s1">PropertyValueFactory&lt;&gt;(</span><span class="s4">&quot;price&quot;</span><span class="s1">))</span><span class="s0">;</span>
+
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
