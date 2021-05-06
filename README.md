@@ -1,4 +1,4 @@
-# InventoryManagementSystem
+# InventoryManagementSystem (JAVA)
 Small business inventory management system built using scene builder and java 11. 
 
 This was my first major project in my B.S. CS program.  
